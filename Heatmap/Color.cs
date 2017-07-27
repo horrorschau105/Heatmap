@@ -51,13 +51,7 @@ namespace Heatmap
             return Color.FromArgb(r > 255 ? 255 : r, g > 255 ? 255 : g, b > 255 ? 255 : b);
         }
     }
-    public class CONST
-    {
-        public const int DEEP_OF_SEARCHING = 3;
-        public const int MARGIN = 5;
-        public const int ZOOM = 3000; // size of picture (max 20000)
-        public const int WIDTH_OF_ROUTE = 2; // don't change, it's enough (max 2)
-    }
+    
     public static class Extensions
     {
         private static void AddOrIncrement(this Dictionary<KeyValuePair<int, int>, int> dict, KeyValuePair<int, int> p)
@@ -67,9 +61,9 @@ namespace Heatmap
         }
         public static void AddAllNearBy(this Dictionary<KeyValuePair<int, int>, int> dict, KeyValuePair<int, int> p)
         {
-            for (int i = -CONST.WIDTH_OF_ROUTE; i <= CONST.WIDTH_OF_ROUTE; ++i)
+            for (int i = -Constants.WIDTH_OF_ROUTE; i <= Constants.WIDTH_OF_ROUTE; ++i)
             {
-                for (int j = -CONST.WIDTH_OF_ROUTE; j <= CONST.WIDTH_OF_ROUTE; ++j)
+                for (int j = -Constants.WIDTH_OF_ROUTE; j <= Constants.WIDTH_OF_ROUTE; ++j)
                 {
                     dict.AddOrIncrement(new KeyValuePair<int, int>(p.Key + i, p.Value + j));
                 }

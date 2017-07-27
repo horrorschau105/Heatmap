@@ -35,14 +35,14 @@ namespace Heatmap
                         lat = Convert.ToDouble(x.Attributes[0].Value.Replace('.', ','));
                         lon = Convert.ToDouble(x.Attributes[1].Value.Replace('.', ','));
                         points_from_file.Add(new KeyValuePair<int, int>
-                            (Convert.ToInt32(CONST.ZOOM * lat), Convert.ToInt32(CONST.ZOOM * lon)));
+                            (Convert.ToInt32(Constants.ZOOM * lat), Convert.ToInt32(Constants.ZOOM * lon)));
 
                     }
                     all_points.AddAllNearBy(points_from_file[0]);
                     for (int i=1;i<points_from_file.Count;++i)
                     {
                         all_points.AddAllNearBy(points_from_file[i]);
-                        all_points.AddPointsBetween(points_from_file[i - 1], points_from_file[i], CONST.DEEP_OF_SEARCHING);
+                        all_points.AddPointsBetween(points_from_file[i - 1], points_from_file[i], Constants.DEEP_OF_SEARCHING);
                         
                     }
                 }
@@ -58,8 +58,8 @@ namespace Heatmap
             min_lat = all_points.Min(i => i.Key.Key);
             max_lat = all_points.Max(i => i.Key.Key);
             max_val = all_points.Max(i => i.Value);
-            int width = max_lon - min_lon + 2 * CONST.MARGIN;
-            int height = max_lat - min_lat + 2 * CONST.MARGIN;
+            int width = max_lon - min_lon + 2 * Constants.MARGIN;
+            int height = max_lat - min_lat + 2 * Constants.MARGIN;
             Colour[,] bitmap = new Colour[height,width];
             for(int i=0;i<height;++i)
             {
@@ -71,7 +71,7 @@ namespace Heatmap
             Console.WriteLine("Generating heatmap...");
             foreach(KeyValuePair<int,int> coord in all_points.Keys)
             {
-                bitmap[coord.Key - min_lat + CONST.MARGIN, coord.Value - min_lon + CONST.MARGIN] = Others.get_color(all_points[coord], max_val);
+                bitmap[coord.Key - min_lat + Constants.MARGIN, coord.Value - min_lon + Constants.MARGIN] = Others.get_color(all_points[coord], max_val);
             }
 
             Bitmap output = new Bitmap(height, width);
