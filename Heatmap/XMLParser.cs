@@ -14,14 +14,14 @@ namespace Heatmap
     /// </summary>
     public class XMLParser
     {
-        List<KeyValuePair<int, int>> points;
+        List<KeyValuePair<double, double>> points;
         string filePath;
         public XMLParser (string path)
         {
-            points = new List<KeyValuePair<int, int>>();
+            points = new List<KeyValuePair<double, double>>();
             filePath = path;
         }
-        public List<KeyValuePair<int, int>> GetAllPoints()
+        public List<KeyValuePair<double, double>> GetAllPoints()
         {
             XmlDocument document = new XmlDocument();
             document.Load(filePath);
@@ -29,7 +29,7 @@ namespace Heatmap
             {
                 double lattitude = Convert.ToDouble(node.Attributes[0].Value.Replace(".", ","));
                 double longitude = Convert.ToDouble(node.Attributes[1].Value.Replace(".", ","));
-                points.Add(new KeyValuePair<int, int>((int)lattitude, (int)longitude));
+                points.Add(new KeyValuePair<double, double>(lattitude, longitude));
             }
             return points;
         }
