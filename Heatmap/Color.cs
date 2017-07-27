@@ -53,10 +53,10 @@ namespace Heatmap
     }
     public class CONST
     {
-        public const int DEEP_OF_SEARCHING = 8;
+        public const int DEEP_OF_SEARCHING = 3;
         public const int MARGIN = 5;
         public const int ZOOM = 3000; // size of picture (max 20000)
-        public const int WIDTH_OF_ROUTE = 1; // don't change, it's enough (max 2)
+        public const int WIDTH_OF_ROUTE = 2; // don't change, it's enough (max 2)
     }
     public static class Extensions
     {

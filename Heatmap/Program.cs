@@ -15,7 +15,7 @@ namespace Heatmap
             List<KeyValuePair<int, int>> points_from_file;
             XmlDocument dc = new XmlDocument();
             double lat, lon;
-            int countof = Directory.GetFiles(".", "*.gpx").Count();
+            int countof = Directory.GetFiles("../../Files", "*.gpx").Count();
             int index = 1;
             if (countof == 0)
             {
@@ -24,7 +24,7 @@ namespace Heatmap
             }
             try
             {
-                foreach (string path in Directory.GetFiles(".", "*.gpx"))
+                foreach (string path in Directory.GetFiles("../../Files", "*.gpx"))
                 {
                     Console.WriteLine("Reading file {0} of {1}", index++, countof);
                     points_from_file = new List<KeyValuePair<int, int>>();
@@ -85,7 +85,7 @@ namespace Heatmap
             }
             Console.WriteLine("Saving...");
             output.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            output.Save("heatmap.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            output.Save("../../heatmap.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             Console.WriteLine("Finished!");
             Console.Read();
         }
