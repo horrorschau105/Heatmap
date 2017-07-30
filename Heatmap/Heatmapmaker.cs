@@ -37,37 +37,23 @@ namespace Heatmap
         }
         public void Generate()
         {
-            int min_lon, max_lon, min_lat, max_lat, max_val;
-            min_lon = allPoints.Min(i => i.Key.Value);
-            max_lon = allPoints.Max(i => i.Key.Value);
-            min_lat = allPoints.Min(i => i.Key.Key);
-            max_lat = allPoints.Max(i => i.Key.Key);
-            max_val = allPoints.Max(i => i.Value);
-            int width = max_lon - min_lon + 2 * Constants.MARGIN;
-            int height = max_lat - min_lat + 2 * Constants.MARGIN;
+            Console.WriteLine("Bolding line...");
+            allPoints = PointsAdjuster.Adjust(PointsAdjuster.BoldLine(allPoints));
+            int width = allPoints.Max(i => i.Key.Value) + 2 * Constants.MARGIN;
+            int height = allPoints.Max(i => i.Key.Key) + 2 * Constants.MARGIN;
+            int heighestValue = allPoints.Max(i => i.Value);
             Colour[,] bitmap = new Colour[height, width];
             for (int i = 0; i < height; ++i)
-            {
                 for (int j = 0; j < width; ++j)
-                {
-                    bitmap[i, j] = new Colour();
-                }
-            }
+                    bitmap[i, j] = new Colour(); // everything is white
             Console.WriteLine("Generating heatmap...");
             foreach (KeyValuePair<int, int> coord in allPoints.Keys)
-            {
-                bitmap[coord.Key - min_lat + Constants.MARGIN, coord.Value - min_lon + Constants.MARGIN] = Others.get_color(allPoints[coord], max_val);
-            }
-
+                bitmap[coord.Key + Constants.MARGIN, coord.Value + Constants.MARGIN] =
+                    Others.get_color(allPoints[coord], heighestValue);
             Bitmap output = new Bitmap(height, width);
             for (int i = 0; i < height; ++i)
-            {
                 for (int j = 0; j < width; ++j)
-                {
                     output.SetPixel(i, j, bitmap[i, j].transform());
-
-                }
-            }
             Console.WriteLine("Saving...");
             output.RotateFlip(RotateFlipType.Rotate270FlipNone);
             output.Save("../../heatmap.jpg", System.Drawing.Imaging.ImageFormat.Tiff);
