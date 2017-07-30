@@ -11,7 +11,10 @@ namespace Heatmap
     {
         static void Main(string[] args)
         {
-            Dictionary<KeyValuePair<int, int>, int> all_points =  new Dictionary<KeyValuePair<int,int>, int>();
+            Heatmapmaker hm = new Heatmapmaker("..\\..\\Files");
+            hm.ReadAllFiles();
+            hm.Generate();
+            /*Dictionary<KeyValuePair<int, int>, int> all_points =  new Dictionary<KeyValuePair<int,int>, int>();
             List<KeyValuePair<int, int>> points_from_file;
             XmlDocument dc = new XmlDocument();
             double lat, lon;
@@ -88,6 +91,7 @@ namespace Heatmap
             output.Save("../../heatmap.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
             Console.WriteLine("Finished!");
             Console.Read();
+        }*/
         }
     }
 }

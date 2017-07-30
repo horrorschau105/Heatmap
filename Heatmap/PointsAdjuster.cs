@@ -9,17 +9,15 @@ namespace Heatmap
     /// <summary>
     /// Manipulations with points come here
     /// </summary>
-    public class PointsAdjuster
+    public static class PointsAdjuster
     {
-        List<KeyValuePair<double, double>> points;
-        public PointsAdjuster(List<KeyValuePair<double ,double> > incomingPoints)
-        {
-            points = incomingPoints;
-        }
-        public List<KeyValuePair<int, int>> adjust()
+        public static List<KeyValuePair<int, int>> Adjust(List<KeyValuePair<double, double>> incomingPoints)
         {
             List<KeyValuePair<int, int>> result = new List<KeyValuePair<int, int>>();
-
+            foreach(var pair in incomingPoints)
+            {
+                result.Add(new KeyValuePair<int, int>(Convert.ToInt32(Constants.ZOOM * pair.Key), Convert.ToInt32(Constants.ZOOM * pair.Value)));
+            } // map it, try in one line?
             return result;
         }
 
