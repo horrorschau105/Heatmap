@@ -42,22 +42,23 @@ namespace Heatmap
             int width = allPoints.Max(i => i.Key.Value) + 2 * Constants.MARGIN;
             int height = allPoints.Max(i => i.Key.Key) + 2 * Constants.MARGIN;
             int heighestValue = allPoints.Max(i => i.Value);
-            Colour[,] bitmap = new Colour[height, width];
+            Color[,] bitmap = new Color[height, width];
             for (int i = 0; i < height; ++i)
                 for (int j = 0; j < width; ++j)
-                    bitmap[i, j] = new Colour(); // everything is white
+                    bitmap[i, j] = Color.White; // everything is white
             Console.WriteLine("Generating heatmap...");
             foreach (KeyValuePair<int, int> coord in allPoints.Keys)
-                bitmap[coord.Key + Constants.MARGIN, coord.Value + Constants.MARGIN] =
-                    Others.get_color(allPoints[coord], heighestValue);
+                bitmap[coord.Key + Constants.MARGIN, coord.Value + Constants.MARGIN] = 
+                    ColorHandler.SetColor(allPoints[coord], heighestValue);
             Bitmap output = new Bitmap(height, width);
             for (int i = 0; i < height; ++i)
                 for (int j = 0; j < width; ++j)
-                    output.SetPixel(i, j, bitmap[i, j].transform());
+                    output.SetPixel(i, j, bitmap[i, j]);
             Console.WriteLine("Saving...");
             output.RotateFlip(RotateFlipType.Rotate270FlipNone);
-            output.Save("../../heatmap.jpg", System.Drawing.Imaging.ImageFormat.Tiff);
+            output.Save("..\\..\\heatmap.png", System.Drawing.Imaging.ImageFormat.Png);
             Console.WriteLine("Finished!");
+            Console.WriteLine("Count of points: {0}", allPoints.Count);
             Console.Read();
         }
     }
