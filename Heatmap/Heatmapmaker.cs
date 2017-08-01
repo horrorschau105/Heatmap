@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Xml;
 using System.IO;
 using System.Drawing;
-using System.Threading.Tasks;
-
 namespace Heatmap
 {
     class Heatmapmaker
     {
-        Dictionary<KeyValuePair<int, int>, int> allPoints;
+        Dictionary<KeyValuePair<int, int>, int> allPoints; // contains all points from gpx 
         XMLParser parser;
         string path;
         public Heatmapmaker(string filesPath)
@@ -38,7 +34,7 @@ namespace Heatmap
         public void Generate()
         {
             Console.WriteLine("Bolding line...");
-            allPoints = PointsAdjuster.Adjust(PointsAdjuster.BoldLine(allPoints));
+            allPoints = PointsAdjuster.Normalize(PointsAdjuster.BoldLine(allPoints));
             int width = allPoints.Max(i => i.Key.Value) + 2 * Constants.MARGIN;
             int height = allPoints.Max(i => i.Key.Key) + 2 * Constants.MARGIN;
             int heighestValue = allPoints.Max(i => i.Value);
@@ -49,11 +45,11 @@ namespace Heatmap
             Console.WriteLine("Generating heatmap...");
             foreach (KeyValuePair<int, int> coord in allPoints.Keys)
                 bitmap[coord.Key + Constants.MARGIN, coord.Value + Constants.MARGIN] = 
-                    ColorHandler.SetColor(allPoints[coord], heighestValue);
+                    ColorHandler.SetColor(allPoints[coord], heighestValue); // setting color
             Bitmap output = new Bitmap(height, width);
             for (int i = 0; i < height; ++i)
                 for (int j = 0; j < width; ++j)
-                    output.SetPixel(i, j, bitmap[i, j]);
+                    output.SetPixel(i, j, bitmap[i, j]); // putting on bitmap
             Console.WriteLine("Saving...");
             output.RotateFlip(RotateFlipType.Rotate270FlipNone);
             output.Save("..\\..\\heatmap.png", System.Drawing.Imaging.ImageFormat.Png);

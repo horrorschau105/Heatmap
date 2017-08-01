@@ -1,12 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using System.IO;
-using System.Drawing;
-
 namespace Heatmap
 {
     /// <summary>
@@ -16,11 +10,19 @@ namespace Heatmap
     {
         List<KeyValuePair<double, double>> points;
         string filePath;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="path">path to catalog with gpx files</param>
         public XMLParser (string path)
         {
             points = new List<KeyValuePair<double, double>>();
             filePath = path;
         }
+        /// <summary>
+        /// get all points from single gpx file
+        /// </summary>
+        /// <returns>list of points</returns>
         public List<KeyValuePair<double, double>> GetAllPoints()
         {
             XmlDocument document = new XmlDocument();
@@ -33,6 +35,5 @@ namespace Heatmap
             }
             return points;
         }
-
     }
 }
